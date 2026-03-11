@@ -1,0 +1,3 @@
+from navigation import navegar_para_dispositivo
+
+navegar_para_dispositivo()
