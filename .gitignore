@@ -1,0 +1,30 @@
+# Ambientes Virtuais (VENV)
+.venv/
+venv/
+ENV/
+env/
+.idea/
+
+# Banco de Dados (SQLite)
+# Como você está no início, ignore o banco para não subir seus testes locais
+*.sqlite3
+db.sqlite3
+
+# Credenciais e Segredos (MUITO IMPORTANTE)
+.env
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# Pastas de IDEs
+.vscode/
+.idea/
+
+# Arquivos de Sistema
+.DS_Store
+Thumbs.db

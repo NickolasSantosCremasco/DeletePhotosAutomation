@@ -8,3 +8,13 @@ BOTOES = {
     "confirmar": (410, 2486),
     "voltar": (70, 209)
 }
+
+COMODOS = [
+    "Sala",
+    "Varanda",
+    "Quarto Suíte",
+    "Banheiro Suíte",
+    "Cozinha",
+    "Lavabo",
+    "Corredor"
+]
