@@ -14,6 +14,8 @@ COMODOS = [
     "Varanda",
     "Quarto Suíte",
     "Quarto 2",
+    "Quarto",
+    "Banheiro",
     "Banheiro Suíte",
     "Cozinha",
     "Lavabo",

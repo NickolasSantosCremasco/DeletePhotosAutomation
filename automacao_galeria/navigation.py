@@ -194,17 +194,22 @@ def esperar_exclusao_finalizar(tentativas=10):
 def escanear_albuns():
 
     vistos = set()
-
     sem_novos = 0
+
+    max_swipes = 10          # ✅ NOVO: evita loop infinito
+    swipes = 0               # ✅ NOVO: contador de swipe
+
     while True:
 
         limpar_notificacoes()
 
         dump_ui()
-
         root = ler_xml()
 
         albuns = detectar_albuns(root, COMODOS)
+
+        # ✅ NOVO: DEBUG — entender o que o detector está vendo
+        print("Álbuns detectados:", [nome for nome, _, _ in albuns])
 
         novos = 0
 
@@ -223,23 +228,70 @@ def escanear_albuns():
 
             novos += 1
 
-            # voltar para lista de álbuns
-            time.sleep(2)
+            # ⚠️ AJUSTE: reduz tempo morto (2s → 1s)
+            time.sleep(1)
 
             # atualizar tela após voltar
             dump_ui()
             root = ler_xml()
 
+        # ===============================
+        # 🔴 BLOCO CRÍTICO (decisão de swipe)
+        # ===============================
         if novos == 0:
+
+            print("Nenhum álbum detectado, confirmando...")
+
+            # segunda leitura (anti-falso-negativo)
+            time.sleep(1)
+
+            dump_ui()
+            root = ler_xml()
+            albuns = detectar_albuns(root, COMODOS)
+
+            print("Segunda leitura:", [nome for nome, _, _ in albuns])  # ✅ DEBUG
+
+            if albuns:
+                print("Falso negativo detectado, continuando...")
+                continue
+
             sem_novos += 1
+
+            # ✅ NOVO: só swipe se realmente necessário
+            print("Swipe necessário (sem novos)")
+
+            swipe(500, 2000, 500, 800)
+            time.sleep(2)
+
+            swipes += 1   # ✅ NOVO
+
         else:
             sem_novos = 0
 
+        # ===============================
+        # 🔴 CONDIÇÕES DE PARADA
+        # ===============================
+
         if sem_novos >= 3:
-            print("\nFim da lista.")
+            print("\nFim da lista (sem novos repetidamente).")
             break
 
-        swipe(500, 2000, 500, 800)
+        # ✅ NOVO: trava de segurança contra loop infinito
+        if swipes >= max_swipes:
+            print("\nLimite de swipes atingido.")
+            break
 
-        time.sleep(2)
+        # ===============================
+        # 🔴 PROBLEMA ORIGINAL ESTAVA AQUI
+        # ===============================
 
+        # ❌ REMOVIDO:
+        # swipe automático no final do loop
+        #
+        # 👉 Antes você fazia swipe SEMPRE
+        # mesmo quando ainda tinha itens na tela
+        #
+        # Isso era o principal bug
+
+        # AGORA:
+        # swipe só acontece dentro do if novos == 0
