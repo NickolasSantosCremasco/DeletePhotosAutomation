@@ -8,9 +8,7 @@ def ler_xml():
 
 
 def pegar_bounds(node):
-
     bounds = node.attrib.get("bounds")
-
     if not bounds:
         return None
 
@@ -20,6 +18,20 @@ def pegar_bounds(node):
     y = (nums[1] + nums[3]) // 2
 
     return x, y
+
+def encontrar_por_resource_id(root, rid):
+
+    for node in root.iter():
+
+        if node.attrib.get("resource-id") == rid:
+
+            coords = pegar_bounds(node)
+
+            if coords:
+                return coords
+
+    return None
+
 
 
 def pegar_textos(root):
@@ -52,3 +64,12 @@ def detectar_albuns(root, comodos):
                 resultados.append((texto, coords[0], coords[1]))
 
     return resultados
+
+def elemento_existe(root, texto):
+
+    for node in root.iter():
+
+        if node.attrib.get("text") == texto:
+            return True
+
+    return False

@@ -4,7 +4,7 @@ BOTOES = {
     "este_dispositivo": (888, 930),
 
     "selecionar_tudo": (1122, 561),
-    "mover_lixeira": (1051, 241),
+    "mover_para_lixeira": (1051, 241),
     "confirmar": (410, 2486),
     "voltar": (70, 209)
 }
@@ -13,8 +13,13 @@ COMODOS = [
     "Sala",
     "Varanda",
     "Quarto Suíte",
+    "Quarto 2",
     "Banheiro Suíte",
     "Cozinha",
     "Lavabo",
-    "Corredor"
+    "Corredor",
+    "Registros Gerais",
+    "Quarto de Serviço",
+    "Banheiro de Serviço",
+    "Área de Serviço"
 ]
